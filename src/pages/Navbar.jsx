@@ -8,13 +8,17 @@ export const Navbar = ({ userLoggedIn, setUserLoggedIn }) => {
     const handleLogout = () => {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
-        setUserLoggedIn(false); // Triggers re-render
-        navigate("/"); // Redirect to home
+        setUserLoggedIn(false);
+        navigate("/");
     };
 
     return (
         <nav className="py-5 bg-emerald-900 p-4 text-white flex justify-between">
-            <Link to="/" className="text-xl font-bold">MyShop</Link>
+
+            <Link to="/" className="flex items-center space-x-2">
+                <img src="/Logo.png" alt="Logo" className="h-10 w-12  " />
+                <span className="text-xl font-bold">MyShop</span>
+            </Link>
             <div className="flex space-x-5 mr-6 items-center">
                 <Link to="/" className="hover:border-b-2 hover:border-red-500">Home</Link>
                 <Link to="/cart" className="hover:border-b-2 hover:border-red-500">Cart</Link>
