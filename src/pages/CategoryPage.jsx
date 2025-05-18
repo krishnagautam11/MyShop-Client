@@ -9,8 +9,7 @@ export const CategoryPage = () => {
   const [products, setProducts] = useState([]);
 
  useEffect(() => {
-  axios
-    .get(`/api/products?category=${categoryName}`)
+  axios.get(`/api/products?category=${categoryName}`)
     .then(res => setProducts(res.data));
 }, [categoryName]);
 
