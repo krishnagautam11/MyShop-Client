@@ -1,4 +1,5 @@
 // pages/CategoryPage.jsx
+import axios from '../axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ProductCard } from '../components/ProductCard';
@@ -7,11 +8,11 @@ export const CategoryPage = () => {
   const { categoryName } = useParams();
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/api/products?category=${categoryName}`)
-      .then(res => res.json())
-      .then(data => setProducts(data));
-  }, [categoryName]);
+ useEffect(() => {
+  axios
+    .get(`/api/products?category=${categoryName}`)
+    .then(res => setProducts(res.data));
+}, [categoryName]);
 
   return (
     <div className="p-8">

@@ -1,3 +1,4 @@
+import axios from "../axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Footer } from "../components/Footer";
@@ -10,25 +11,20 @@ export const Login = ({ setUserLoggedIn }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const res = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+  e.preventDefault();
+  try {
+    const res = await axios.post("/api/auth/login", formData);
+    const data = res.data;
 
-    const data = await res.json();
-
-    if (res.ok) {
-      localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("token", data.token);
-      alert(data.message);
-      setUserLoggedIn(true); // ✅ set state
-      navigate("/");         // ✅ no page refresh
-    } else {
-      alert(data.error);
-    }
-  };
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("token", data.token);
+    alert(data.message);
+    setUserLoggedIn(true);
+    navigate("/");
+  } catch (err) {
+    alert(err.response?.data?.error || "Login failed");
+  }
+};
 
   return (
     <div className="flex flex-col min-h-screen bg-neutral-100">

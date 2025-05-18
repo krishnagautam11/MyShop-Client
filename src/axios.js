@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://myshop-server-production.up.railway.app",
-  withCredentials: true, // if you're using cookies/session
+  baseURL: import.meta.env.VITE_API_URL, 
+  withCredentials: true, 
 });
 
 export default instance;

@@ -1,3 +1,4 @@
+import axios from "../axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
@@ -9,18 +10,15 @@ export const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const res = await fetch("http://localhost:5000/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-    const data = await res.json();
-    alert(data.message || data.error);
-  };
-
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await axios.post("/api/auth/register", formData);
+    alert(res.data.message);
+  } catch (err) {
+    alert(err.response?.data?.error || "Registration failed");
+  }
+};
   return (
     <div className="flex flex-col min-h-screen bg-stone-100">
       <div className="flex-grow flex items-center justify-center">
